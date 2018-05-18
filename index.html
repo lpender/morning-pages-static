@@ -46,9 +46,18 @@ textarea:focus {
         result += "\n\nhit cmd-s to save\n"
 
         textarea.value = result;
-      } else if (hasPressedAnyKey === false) {
+      }
+
+      if (hasPressedAnyKey === false) {
         // clear the junk
         hasPressedAnyKey = true;
+
+        const el = document.documentElement,
+            rfs = el.requestFullScreen
+                  || el.webkitRequestFullScreen
+                  || el.mozRequestFullScreen;
+
+        rfs.call(el);
 
         textarea.value = "";
       }
