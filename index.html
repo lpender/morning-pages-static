@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title="typewriter: just write"></title>
+
+    <style>
+html, body {
+  padding: 0;
+  margin: 0;
+}
+textarea {
+  cursor: none;
+  position: fixed;
+  border: none;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: white;
+  font-family: courier;
+  font-size: 1.6em;
+}
+
+textarea:focus {
+  border: 0px;
+  outline: none;
+}
+    </style>
+  </head>
+  <body>
+    <textarea autofocus id="write">just write.</textarea>
+  </body>
+
+  <script>
+    let textarea = document.getElementById("write");
+    let hasPressedAnyKey = false;
+    let hasPressedHelp = false;
+
+    textarea.addEventListener("keydown", function(event) {
+      let getHelp = (event.key === "?" && hasPressedHelp === false)
+
+      if (getHelp) {
+        // show help
+        hasPressedHelp = true;
+
+        let result = textarea.value;
+
+        result += "\n\nhit cmd-s to save\n"
+
+        textarea.value = result;
+      } else if (hasPressedAnyKey === false) {
+        // clear the junk
+        hasPressedAnyKey = true;
+
+        textarea.value = "";
+      }
+    });
+  </script>
+</html>
