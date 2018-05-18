@@ -36,13 +36,22 @@ textarea:focus {
     </style>
   </head>
   <body>
-    <textarea autofocus id="write">just write.</textarea>
+    <textarea autofocus id="write"></textarea>
   </body>
 
   <script>
-    let textarea = document.getElementById("write");
     let hasPressedAnyKey = false;
     let hasPressedHelp = false;
+    let textarea = document.getElementById("write");
+
+    let prompts = [
+      'just write',
+      'describe your take on existence'
+    ]
+
+    let prompt = prompts[Math.floor(Math.random()*prompts.length)]
+
+    textarea.value = prompt
 
     textarea.addEventListener("keydown", function(event) {
       let getHelp = (event.key === "?" && hasPressedHelp === false)
@@ -56,6 +65,7 @@ textarea:focus {
         result += "\n\n"
         // result += "hit cmd-s to save\n"
         result += "cmd-b for bird sounds\n"
+        result += "cmd-p for a prompt\n"
 
         textarea.value = result;
       }
