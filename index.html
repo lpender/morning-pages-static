@@ -1,22 +1,32 @@
 <html>
   <head>
-    <title="typewriter: just write"></title>
+    <title>typewriter: just write</title>
 
     <style>
 html, body {
   padding: 0;
   margin: 0;
+  background-color: black;
+  display: flex;
+  justify-content: flex-start;
+
 }
 textarea {
   cursor: none;
   position: fixed;
   border: none;
-  width: 100%;
+  max-width: 1300px;
   height: 100%;
   background: black;
   color: white;
   font-family: courier;
-  font-size: 1.6em;
+  font-size: 2.0em;
+  min-width: 800px;
+  width: 100%;
+  padding-top: 60px;
+  padding-left: 60px;
+  overflow: scroll;
+  resize: none;
 }
 
 textarea:focus {
