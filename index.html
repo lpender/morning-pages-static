@@ -41,12 +41,16 @@ textarea:focus {
 
   <script>
     let hasPressedAnyKey = false;
-    let hasPressedHelp = false;
+    let hasJustPressedHelp = false;
     let textarea = document.getElementById("write");
+    let cachedText = ""
 
     let prompts = [
       'just write',
-      'describe your take on existence'
+      'describe your take\non existence',
+      'what cloud formation best represents\nyour current\ntemperament',
+      'what would you do if you had one year to live?',
+      'write some details about the day\nthe more random and meaningless the better'
     ]
 
     let prompt = prompts[Math.floor(Math.random()*prompts.length)]
@@ -54,18 +58,45 @@ textarea:focus {
     textarea.value = prompt
 
     textarea.addEventListener("keydown", function(event) {
-      let getHelp = (event.key === "?" && hasPressedHelp === false)
+      console.log(event.key)
+      let getHelp = (event.key === "?")
+      let log = (event.key === "l" && event.ctrlKey)
+
+
+      if (hasJustPressedHelp) {
+        hasJustPressedHelp = false
+
+        textarea.value = cachedText;
+      }
 
       if (getHelp) {
         // show help
-        hasPressedHelp = true;
-
-        let result = textarea.value;
+        hasJustPressedHelp = true
+        cachedText = textarea.value + "?";
+        let result = cachedText;
 
         result += "\n\n"
         // result += "hit cmd-s to save\n"
+        result += "cmd-l to log this entry\n"
         result += "cmd-b for bird sounds\n"
         result += "cmd-p for a prompt\n"
+        result += "or just keep typing..."
+
+        textarea.value = result;
+
+        event.preventDefault()
+      }
+
+      if (log) {
+        let result = textarea.value;
+
+        result += "\n\n"
+        result += "first word:\n"
+        result += "last word:\n"
+        result += "password:\n\n"
+        result += "anyone with these credentials will be able to view your log "
+        + "which will be saved forever on the blockchain.\n"
+
 
         textarea.value = result;
       }
