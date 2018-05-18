@@ -42,6 +42,8 @@ textarea:focus {
   <script>
     let hasPressedAnyKey = false;
     let hasJustPressedHelp = false;
+    let showHelp = true
+
     let textarea = document.getElementById("write");
     let cachedText = ""
 
@@ -59,17 +61,27 @@ textarea:focus {
 
     textarea.addEventListener("keydown", function(event) {
       console.log(event.key)
-      let getHelp = (event.key === "?")
-      let log = (event.key === "l" && event.ctrlKey)
+      let keyGetHelp = (event.key === "?")
+      let keyLog = (event.key === "l" && event.altKey)
+      let keyToggleOff = (event.key === "s" && event.ctrlKey)
 
+      debugger
 
       if (hasJustPressedHelp) {
         hasJustPressedHelp = false
 
-        textarea.value = cachedText;
+        return textarea.value = cachedText;
       }
 
-      if (getHelp) {
+      if (keyToggleOff) {
+        if (showHelp) {
+          showHelp = false
+        } else {
+          showHelp = true
+        }
+      }
+
+      if (keyGetHelp && showHelp) {
         // show help
         hasJustPressedHelp = true
         cachedText = textarea.value + "?";
@@ -77,17 +89,18 @@ textarea:focus {
 
         result += "\n\n"
         // result += "hit cmd-s to save\n"
+        result += "to turn this off ctrl-s\n\n"
         result += "cmd-l to log this entry\n"
         result += "cmd-b for bird sounds\n"
-        result += "cmd-p for a prompt\n"
+        result += "cmd-p for a prompt\n\n"
         result += "or just keep typing..."
 
         textarea.value = result;
 
-        event.preventDefault()
+        return event.preventDefault()
       }
 
-      if (log) {
+      if (keyLog) {
         let result = textarea.value;
 
         result += "\n\n"
@@ -98,7 +111,7 @@ textarea:focus {
         + "which will be saved forever on the blockchain.\n"
 
 
-        textarea.value = result;
+        return textarea.value = result;
       }
 
       if (hasPressedAnyKey === false) {
