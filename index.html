@@ -12,7 +12,6 @@ html, body {
 
 }
 textarea {
-  cursor: none;
   position: fixed;
   border: none;
   max-width: 1300px;
@@ -50,12 +49,9 @@ textarea:focus {
     let prompts = [
       'Just write.',
       'Write down what you observe around you.',
-      'Is life fun or scary? Are people good or bad?'
+      'Is life fun or scary? Are people good or bad?',
+      'Stream of consciousness. Go.'
     ]
-
-    let prompt = prompts[Math.floor(Math.random()*prompts.length)]
-
-    textarea.value = prompt + "\n\n"
 
     textarea.focus()
 
@@ -64,6 +60,7 @@ textarea:focus {
       let keyGetHelp = (event.key === "?")
       let keyLog = (event.key === "l" && event.altKey)
       let keyToggleOff = (event.key === "s" && event.ctrlKey)
+      let keyPrompt = (event.key === "p" && event.ctrlKey)
 
       if (hasJustPressedHelp) {
         hasJustPressedHelp = false
@@ -77,6 +74,8 @@ textarea:focus {
         } else {
           showHelp = true
         }
+
+        event.preventDefault()
       }
 
       if (keyGetHelp && showHelp) {
@@ -87,15 +86,15 @@ textarea:focus {
 
         result += "\n\n"
         // result += "hit cmd-s to save\n"
-        result += "to turn this off ctrl-s\n\n"
-        result += "cmd-l to log this entry\n"
-        result += "cmd-b for bird sounds\n"
-        result += "cmd-p for a prompt\n\n"
+        result += "to silence this, ctrl-s\n\n"
+        result += "ctrl-p for a prompt\n"
+        result += "ctrl-l to log this entry\n"
+        result += "ctrl-b for bird sounds\n"
         result += "or just keep typing..."
 
         textarea.value = result;
 
-        return event.preventDefault()
+        event.preventDefault()
       }
 
       if (keyLog) {
@@ -109,7 +108,21 @@ textarea:focus {
         + "which will be saved forever on the blockchain.\n"
 
 
-        return textarea.value = result;
+        textarea.value = result;
+
+        event.preventDefault()
+      }
+
+      if (keyPrompt) {
+        let result = textarea.value;
+
+        let prompt = prompts[Math.floor(Math.random()*prompts.length)]
+
+        result += prompt + "\n\n"
+
+        textarea.value = result
+
+        event.preventDefault()
       }
 
       if (hasPressedAnyKey === false) {
