@@ -1,0 +1,36 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: black;
+}
+
+.fadeable {
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+
+.screen-active .fadeable {
+  opacity: 1;
+}
+
+textarea {
+  position: fixed;
+  border: none;
+  height: calc(100% - 20px);
+  background: black;
+  color: white;
+  font-family: Georgia;
+  font-size: 2em;
+  letter-spacing: 0.7px;
+  width: 100%;
+  padding: 60px calc(50vw - 480px) 10px;
+  line-height: 1.48;
+  overflow: scroll;
+  resize: none;
+}
+
+textarea:focus {
+  border: 0px;
+  outline: none;
+}
